@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function checkWebsite() {
+            var websiteInput = document.getElementById("websiteInput").value;
+            document.getElementById("result").innerHTML = "Success!";
+            document.getElementById("websites").innerHTML += "<li><a href='" + websiteInput + "' target='_blank'>" + websiteInput + "</a></li>";
+            document.getElementById("websiteInput").value = "";
+            document.getElementById("checkButton").style.display = "none";
+            document.getElementById("websiteInput").style.display = "none";
+
+            // Saving the recently checked website to localStorage
+            var websitesList = JSON.parse(localStorage.getItem("websites")) || [];
+            websitesList.push(websiteInput);
+            localStorage.setItem("websites", JSON.stringify(websitesList));
+        }
+
+        // Loading the list of checked websites from localStorage when the page loads
+        window.onload = function() {
+            var websitesList = JSON.parse(localStorage.getItem("websites")) || [];
+            var websitesHTML = "";
+            for (var i = 0; i < websitesList.length; i++) {
+                websitesHTML += "<li><a href='" + websitesList[i] + "' target='_blank'>" + websitesList[i] + "</a></li>";
+            }
+            document.getElementById("websites").innerHTML = websitesHTML;
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Website Checker</h1>
+        <input type="text" id="websiteInput" placeholder="Enter website URL">
+        <button id="checkButton" onclick="checkWebsite()">Check Website</button>
+        <div id="result"></div>
+        <h2>Saved Websites</h2>
+        <ul id="websites"></ul>
+        <button onclick="window.location.href='https://ayeycaptain.github.io/DomainUrlFree/'">Manage Server</button>
+    </div>
+</body>
+</html>
